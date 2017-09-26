@@ -1,7 +1,7 @@
 {
   "name": "Buttons",
   "version": "1.0.0",
-  "description": "Button component for you website",
+  "description": "Buttons Set for you website",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

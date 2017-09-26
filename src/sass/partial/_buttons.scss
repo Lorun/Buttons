@@ -1,0 +1,207 @@
+/***************************************************/
+/* BUTTONS */
+
+$color_text: #454545;
+$color_brand: #5690ff;
+$color_link: #5690ff;
+$base_btn_height: 2.5em;
+$inverted_mod: inverted;
+
+
+@mixin get_btn_hover ($color) {
+    &:hover {
+        background-color: darken($color, 7);
+    }
+}
+
+@mixin get_btn_active ($color: '') {
+    &:active {
+        @if $color != '' {
+            box-shadow: inset 0 0.25em 1.75em darken($color, 20);
+        } @else {
+            box-shadow: none;
+            @content;
+        }
+    }
+}
+
+/* Create color mod of Buttons */
+@mixin button_color ($mod, $bg_color, $color) {
+    $btn_class: #{'.btn--'}#{$mod};
+    @if $mod == '' {
+        $btn_class: '.btn';
+    }
+
+    #{$btn_class} {
+        background-color: $bg_color;
+        color: $color;
+
+        @include get_btn_hover($bg_color);
+        @include get_btn_active($bg_color);
+
+        &:disabled {
+            background-color: $bg_color;
+            box-shadow: none;
+        }
+
+        &.btn--#{$inverted_mod} {
+            background-color: $color;
+            color: $bg_color;
+            border: 1px solid $bg_color;
+
+            &:hover {
+                color: darken($bg_color, 7);
+                border: 1px solid darken($bg_color, 7);
+            }
+            @include get_btn_active() {
+                color: $bg_color;
+                border: 1px solid $bg_color;
+            }
+
+            &:disabled {
+                background-color: $color;
+                color: $bg_color;
+                border: 1px solid $bg_color;
+            }
+        }
+
+        &.btn--ignore_disable {
+            &:disabled {
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+
+        @content;
+    }
+}
+
+/* Create size mod of Buttons */
+@mixin button_size ($size, $font_size, $min_width: 8em, $height: $base_btn_height) {
+    .btn--#{$size} {
+        font-size: $font_size;
+        height: $height;
+        line-height: $height;
+
+        @if $min_width != '' {
+            min-width: $min_width;
+        }
+
+        &.btn--#{$inverted_mod} {
+            line-height: calc(#{$height} - 2px);
+        }
+
+        @if $height != $base_btn_height {
+            &.btn--icon_only {
+                min-width: $height;
+            }
+        }
+
+        @content;
+    }
+}
+
+
+/* Common Button styles */
+.btn {
+    box-sizing: border-box;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    text-decoration: none;
+    margin: 0;
+    white-space: nowrap;
+    transition: all 0.25s;
+    user-select: none;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+
+    padding: 0 1em;
+}
+
+/* Generating buttons colors */
+@include button_color('' , #e9e7f2, #4f5663);
+@include button_color(brand, $color_brand, #fff);
+@include button_color(success, #0cd042, #fff);
+@include button_color(link, transparent, $color_link) {
+    text-decoration: underline;
+    padding: 0;
+    &:hover {
+        color: darken($color_link, 15);
+    }
+}
+@include button_color(text, transparent, $color_text) {
+    padding: 0;
+    cursor: default;
+    &:hover {
+        color: $color_text;
+    }
+}
+
+/* With custom hover */
+@include button_color(black, #000, #ccc) {
+    &:hover {
+        background-color: rgba(#000, 0.7);
+        color: #fff;
+    }
+}
+
+/* Generating sizes */
+@include button_size(l, 18px, 10em);
+@include button_size(m, 16px);
+@include button_size(s, 14px, 8em, 2em);
+
+
+
+/* Icon only Button */
+.btn--icon_only {
+    min-width: $base_btn_height;
+    padding: 0;
+}
+
+/* Icon positions */
+.btn--icon_left {
+    .fa {
+        margin-right: 0.25em;
+    }
+}
+.btn--icon_right {
+    .fa {
+        margin-left: 0.25em;
+    }
+}
+.btn--icon_both {
+    .fa {
+        &:first-child {
+            margin-right: 0.25em;
+        }
+        &:last-child {
+            margin-left: 0.25em;
+        }
+    }
+}
+
+/* No left & right paddings */
+.btn--no_padding {
+    padding: 0;
+}
+
+/* No min-width */
+.btn--no_min_width {
+    min-width: 0;
+}
+
+.btn--link,
+.btn--text {
+    min-width: 0;
+    line-height: 1.5;
+    height: auto;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}

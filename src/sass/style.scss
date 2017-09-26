@@ -1,0 +1,23 @@
+@import "partial/common";
+
+
+.row {
+    display: flex;
+    margin-bottom: 2em;
+}
+
+.section {
+    padding: 1em;
+
+    .btn {
+        margin-bottom: 1em;
+    }
+}
+
+.section--mobile {
+    width: 100%;
+
+    .btn {
+        width: 100%;
+    }
+}
